@@ -1,4 +1,7 @@
-const withPWA = require("next-pwa")({
+import withPWA from 'next-pwa';
+import { RemotePattern } from 'next/dist/shared/lib/image-config';
+
+const withPWAConfig = withPWA({
   dest: "public",
   register: true,
   skipWaiting: true,
@@ -148,24 +151,26 @@ const withPWA = require("next-pwa")({
   ],
 });
 
+const remotePatterns: RemotePattern[] = [
+  {
+    protocol: "https",
+    hostname: "srsaeyzykeeykfzvtdnd.supabase.co",
+    pathname: "/**",
+  },
+  {
+    protocol: "https",
+    hostname: "picsum.photos",
+    pathname: "/**",
+  },
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   turbopack: {},
   allowedDevOrigins: ["192.168.1.0/24"],
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "*.supabase.co",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "picsum.photos",
-        pathname: "/**",
-      },
-    ],
+    remotePatterns,
   },
 };
 
-module.exports = withPWA(nextConfig);
+export default withPWAConfig(nextConfig);
