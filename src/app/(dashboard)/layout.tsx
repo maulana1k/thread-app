@@ -1,7 +1,4 @@
-import { ThemeToggle } from "@/components/theme-toggle";
-import { UserNav } from "@/components/layout/user-nav";
 import { MobileNav } from "@/components/layout/mobile-nav";
-import { InstallPWA } from "@/components/install-pwa";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 
 export default function DashboardLayout({

@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { InstallPWA } from "@/components/install-pwa";
 import { ChevronDown } from "lucide-react";
-import GlitchText from "@/components/GlitchText";
 import Link from "next/link";
 import { NotificationDrawer } from "@/components/notification-drawer";
 
