@@ -9,7 +9,7 @@ export default function DashboardLayout({
   return (
     <div className="flex min-h-dvh w-full">
       <AppSidebar />
-      <main className="flex-1 w-full ">
+      <main className="flex-1 w-full relative pb-[env(safe-area-inset-bottom)]">
         <div className="mx-auto p-0 pb-20 lg:pb-0">{children}</div>
         <MobileNav />
       </main>

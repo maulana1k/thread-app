@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
+import { Spinner } from "./ui/spinner";
 
-// TypeScript interface for BeforeInstallPromptEvent
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
   readonly userChoice: Promise<{
@@ -74,23 +74,24 @@ export function InstallPWA() {
   };
 
   // Don't show button if PWA is not supported, already installed, or installing
-  if (!supportsPWA || isInstalled) {
-    return null;
-  }
+  // if (!supportsPWA || isInstalled) {
+  //   return null;
+  // }
 
   return (
     <Button
-      variant="ghost"
-      size="icon"
+      variant="default"
+      className="rounded-full"
+      size="sm"
       onClick={onClick}
       disabled={isInstalling}
-      title={isInstalling ? "Installing..." : "Install App"}
     >
-      <Download
-        className={`h-[1.2rem] w-[1.2rem] ${isInstalling ? "animate-pulse" : ""}`}
-      />
-      <span className="sr-only">
-        {isInstalling ? "Installing..." : "Install App"}
+      {isInstalling && (
+        <Spinner />
+      )}
+      <span className="flex items-center gap-2 font-semibold text-sm">
+        <Download size={18} strokeWidth={3} />
+        {isInstalling ? "Installing" : "Install"}
       </span>
     </Button>
   );

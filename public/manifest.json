@@ -6,9 +6,12 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#ffffff",
-  "theme_color": "#6366f1",
-  "categories": ["social", "lifestyle"],
+"background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "categories": [
+    "social",
+    "lifestyle"
+  ],
   "icons": [
     {
       "src": "/icon-192x192.png",
