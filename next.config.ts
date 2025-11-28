@@ -167,10 +167,10 @@ const remotePatterns: RemotePattern[] = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   turbopack: {},
-  allowedDevOrigins: ["192.168.1.0/24"],
+  allowedDevOrigins: ["192.168.1.6"],
   images: {
     remotePatterns,
   },
 };
 
-export default withPWAConfig(nextConfig);
+export default withPWAConfig(nextConfig)

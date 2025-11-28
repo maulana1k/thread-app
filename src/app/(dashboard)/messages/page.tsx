@@ -5,7 +5,7 @@ import { MessageList } from "@/features/messages/components/message-list";
 
 export default function MessagesPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen max-w-xl mx-auto bg-background">
       {/* iOS Style Header */}
       <div className="sticky top-0 z-20 bg-background/80 backdrop-blur-xl  pt-4 pb-2 px-4 transition-all">
         <div className="flex justify-between items-center mb-2">

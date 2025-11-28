@@ -51,7 +51,7 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen max-w-2xl mx-auto bg-background pb-24">
       {/* Header with Search */}
       <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-xl pt-4 pb-3 px-4">
         <div className="flex items-center gap-3">
