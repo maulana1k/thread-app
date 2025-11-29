@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Post } from "../types";
 import { UserAvatar } from "@/components/user-avatar";
@@ -8,12 +8,10 @@ import { cn, formatTimeAgo } from "@/lib/utils";
 import {
   Heart,
   ChatRound,
-  Repeat,
   Plain,
   MenuDots,
   Bookmark,
   LinkMinimalistic2 as LinkIcon,
-  DangerTriangle,
   Flag2,
   Refresh,
 } from "@solar-icons/react";
@@ -34,6 +32,40 @@ interface FeedItemProps {
 export function FeedItem({ post }: FeedItemProps) {
   const router = useRouter();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const images = useMemo(() => {
+    if (!post.image_url) return [];
+    try {
+      const parsed = JSON.parse(post.image_url);
+      return Array.isArray(parsed) ? parsed : [parsed];
+    } catch (e) {
+      return [post.image_url];
+    }
+  }, [post.image_url]);
+
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const center = container.scrollLeft + container.offsetWidth / 2;
+    
+    let closestIndex = 0;
+    let minDistance = Infinity;
+
+    Array.from(container.children).forEach((child, index) => {
+      const element = child as HTMLElement;
+      const childCenter = element.offsetLeft + element.offsetWidth / 2;
+      const distance = Math.abs(childCenter - center);
+      
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    setCurrentImageIndex(closestIndex);
+  };
 
   const handlePostClick = () => {
     router.push(`/post/${post.id}`);
@@ -171,41 +203,72 @@ export function FeedItem({ post }: FeedItemProps) {
             <p className="text-md">{post.content}</p>
           </div>
 
-          {post.image_url && (
+          {images.length > 0 && (
             <div className="pt-2 cursor-pointer" onClick={handlePostClick}>
-              <ImageLoader
-                src={post.image_url}
-                alt="Post content"
-                className="rounded-lg border object-cover w-full max-h-[500px]"
-              />
+              {images.length === 1 ? (
+                <ImageLoader
+                  src={images[0]}
+                  alt="Post content"
+                  className="rounded-lg border object-cover w-full max-h-[500px]"
+                />
+              ) : (
+                <div className="relative group">
+                  <div 
+                    ref={scrollContainerRef}
+                    onScroll={handleScroll}
+                    className="flex gap-2 w-[80dvw] lg:w-auto overflow-x-auto no-scrollbar pb-2 snap-x snap-mandatory"
+                  >
+                    {images.map((url, index) => (
+                      <div key={index} className="relative shrink-0 snap-center">
+                        <img
+                          src={url}
+                          alt={`Post content ${index + 1}`}
+                          className="h-auto max-h-[300px] w-auto max-w-[80dvw] lg:w-auto rounded-lg border bg-muted/20"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex justify-center gap-1.5 mt-2">
+                    {images.map((_, idx) => (
+                      <div 
+                        key={idx} 
+                        className={cn(
+                          "h-1 rounded-full transition-all duration-300", 
+                          idx === currentImageIndex ? "bg-primary w-3" : "bg-primary/20 w-1"
+                        )}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
           <div className="flex pt-3">
             <div className="flex gap-4">
               <button className="flex items-center gap-2">
-                <Heart size={21} />
+                <Heart size={23} />
                 {!!post.likes_count && (
                   <span className="text-sm">{post.likes_count}</span>
                 )}
               </button>
 
               <button className="flex items-center gap-2">
-                <ChatRound size={21} />
+                <ChatRound size={23} />
                 {!!post.comments_count && (
                   <span className="text-sm">{post.comments_count}</span>
                 )}
               </button>
 
               <button className="flex items-center gap-2">
-                <Refresh size={21} />
+                <Refresh size={23} />
                 {!!post.comments_count && (
                   <span className="text-sm">{post.comments_count}</span>
                 )}
               </button>
 
               <button className="flex items-center gap-2">
-                <Plain size={21} className="rotate-45" />
+                <Plain size={23} className="rotate-45" />
                 {!!post.comments_count && (
                   <span className="text-sm">{post.comments_count}</span>
                 )}

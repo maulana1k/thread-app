@@ -25,7 +25,7 @@ export function useProfile(username: string) {
 
 export function useProfilePosts(
   username: string,
-  type: "posts" | "replies" | "media" | "saved",
+  type: "posts" | "repost" | "media" | "saved",
 ) {
   const [posts, setPosts] = useState<ProfilePost[]>([]);
   const [isLoading, setIsLoading] = useState(true);

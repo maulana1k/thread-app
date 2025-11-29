@@ -1,5 +1,8 @@
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { AppSidebar } from "@/components/layout/app-sidebar";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { InstallPWA } from "@/components/install-pwa";
+import { UserNav } from "@/components/layout/user-nav";
 
 export default function DashboardLayout({
   children,
@@ -9,6 +12,12 @@ export default function DashboardLayout({
   return (
     <div className="flex min-h-dvh w-full">
       <AppSidebar />
+      <div className="fixed top-4 right-4 hidden md:flex gap-4 items-center">
+        <ThemeToggle />
+        <InstallPWA />
+        <UserNav />
+
+      </div>
       <main className="flex-1 w-full relative pb-[env(safe-area-inset-bottom)]">
         <div className="mx-auto p-0 pb-20 lg:pb-0">{children}</div>
         <MobileNav />

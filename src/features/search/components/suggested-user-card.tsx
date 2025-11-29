@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { UserAvatar } from "@/components/user-avatar";
 import { Button } from "@/components/ui/button";
 import { SuggestedUser } from "../types";
+import { Check, Plus } from "lucide-react";
 
 interface SuggestedUserCardProps {
   user: SuggestedUser;
@@ -28,24 +29,28 @@ export function SuggestedUserCard({ user }: SuggestedUserCardProps) {
       <UserAvatar
         onClick={handleAvatarClick}
         className="cursor-pointer hover:opacity-80 transition-opacity shrink-0"
-        size="lg"
+        size="xl"
         src={user.avatar}
-        fallback={user.name}
+        fallback={user.full_name}
       />
 
       <div className="flex-1 min-w-0">
-        <h3 className="font-bold text-sm truncate">{user.name}</h3>
+        <h3 className="font-bold truncate">{user.username}</h3>
+        <p className="font-semibold text-sm text-muted-foreground truncate">
+          {user.full_name}
+        </p>
         <p className="text-sm text-muted-foreground truncate">
-          @{user.username}
+          823 Followers
         </p>
       </div>
 
       <Button
         onClick={handleFollow}
         size="sm"
-        variant={isFollowing ? "outline" : "default"}
+        variant={isFollowing ? "ghost" : "default"}
         className="rounded-full font-semibold shrink-0 text-sm"
       >
+        {isFollowing && <Check className="h-4 w-4" />}
         {isFollowing ? "Following" : "Follow"}
       </Button>
     </div>

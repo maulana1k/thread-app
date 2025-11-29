@@ -6,17 +6,19 @@ import {
   Home2,
   Magnifer,
   PenNewSquare,
-  Inbox,
   User,
+  Inbox,
 } from "@solar-icons/react/ssr";
 import { cn } from "@/lib/utils";
 import { CreatePostDialog } from "@/features/feeds/components/create-post-dialog";
 import { useAuthStore } from "@/store/auth-store";
+import { useCreatePostStore } from "@/features/feeds/store/create-post-store";
 import { useEffect, useState } from "react";
 
 export function MobileNav() {
   const pathname = usePathname();
   const { profile } = useAuthStore();
+  const { isSubmitting, submitStatus } = useCreatePostStore();
   const [profileUrl, setProfileUrl] = useState("/profile");
 
   useEffect(() => {
@@ -35,6 +37,9 @@ export function MobileNav() {
 
   return (
     <div className="fixed bottom-0 left-0 z-50 w-full pb-[env(safe-area-inset-bottom)] border-t-[0.5px] bg-background lg:hidden ">
+      {isSubmitting && (
+        <div className="absolute top-0 left-0 w-full h-1.5 bg-primary animate-pulse shadow-[0_0_15px_var(--color-primary)] z-50" />
+      )}
       <div className="flex items-center justify-around px-2">
         {items.map((item) => {
           const isActive = pathname === item.url;
@@ -46,13 +51,13 @@ export function MobileNav() {
                 trigger={
                   <button
                     className={cn(
-                      "flex flex-col items-center justify-center gap-1 pt-4 text-muted-foreground transition-colors hover:text-foreground",
+                      "flex flex-col items-center justify-center gap-1 py-3 text-muted-foreground transition-colors hover:text-foreground",
                       isActive && "text-foreground",
                     )}
                   >
                     <item.icon
-                      size={28}
-                      weight={isActive ? "Bold" : "Linear"}
+                      size={30}
+                      weight={isActive ? "Bold" : "Outline"}
                     />
                   </button>
                 }
@@ -65,11 +70,11 @@ export function MobileNav() {
               key={item.title}
               href={item.url}
               className={cn(
-                "flex flex-col items-center justify-center gap-1 pt-4 text-muted-foreground transition-colors hover:text-foreground",
+                "flex flex-col items-center justify-center gap-1 py-3 text-muted-foreground transition-colors hover:text-foreground",
                 isActive && "text-foreground",
               )}
             >
-              <item.icon size={28} weight={isActive ? "Bold" : "Linear"} />
+              <item.icon size={30} weight={isActive ? "Bold" : "Outline"} />
             </Link>
           );
         })}

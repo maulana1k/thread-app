@@ -12,37 +12,41 @@ export function ProfilePageSkeleton() {
       </div>
 
       {/* Profile Header Skeleton */}
-      <div className="flex flex-col items-center pt-8 pb-4 px-4">
-        <Skeleton className="h-24 w-24 rounded-full mb-4" />
-
-        <div className="flex flex-col items-center gap-2 mb-4">
-          <Skeleton className="h-6 w-48" />
-          <Skeleton className="h-4 w-32" />
-        </div>
-
-        <div className="flex gap-6 mb-6">
-          <div className="flex flex-col items-center gap-1">
-            <Skeleton className="h-6 w-8" />
-            <Skeleton className="h-3 w-16" />
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <Skeleton className="h-6 w-12" />
-            <Skeleton className="h-3 w-16" />
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <Skeleton className="h-6 w-12" />
-            <Skeleton className="h-3 w-12" />
+      <div className="flex flex-col lg:flex-row lg:gap-8 pt-8 pb-4 px-4">
+        {/* Avatar & User Info Section */}
+        <div className="flex gap-3 items-center lg:items-start">
+          <Skeleton className="h-24 w-24 lg:h-40 lg:w-40 rounded-full mb-4 border-2 border-background shadow-sm" />
+          <div className="flex flex-col gap-2 mb-1 lg:mt-4">
+            <Skeleton className="h-7 w-48 lg:w-64" /> {/* Name */}
+            <Skeleton className="h-5 w-32 lg:w-40" /> {/* Username */}
           </div>
         </div>
 
-        <div className="flex gap-2 w-full max-w-xs mb-6">
-          <Skeleton className="h-10 flex-1 rounded-lg" />
-          <Skeleton className="h-10 flex-1 rounded-lg" />
-        </div>
+        {/* Stats, Actions & Bio Section */}
+        <div className="flex flex-col lg:items-start lg:flex-1 lg:mt-4">
+          {/* Stats */}
+          <div className="flex gap-6 mb-6">
+            <div className="flex gap-2 items-center">
+              <Skeleton className="h-5 w-8" />
+              <Skeleton className="h-4 w-16" />
+            </div>
+            <div className="flex gap-2 items-center">
+              <Skeleton className="h-5 w-8" />
+              <Skeleton className="h-4 w-16" />
+            </div>
+          </div>
 
-        <div className="w-full max-w-md space-y-2">
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-3/4 mx-auto" />
+          {/* Action Buttons */}
+          <div className="flex gap-2 w-full lg:max-w-xs mb-6">
+            <Skeleton className="h-10 flex-1 rounded-lg" />
+            <Skeleton className="h-10 flex-1 rounded-lg" />
+          </div>
+
+          {/* Bio */}
+          <div className="w-full max-w-md space-y-2">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-3/4" />
+          </div>
         </div>
       </div>
 

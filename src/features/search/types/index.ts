@@ -7,7 +7,7 @@ export interface TrendingTopic {
 export interface TrendingFeed {
   id: string;
   content: string;
-  imageUrl?: string;
+  image_url: string;
   author: {
     name: string;
     username: string;
@@ -17,7 +17,7 @@ export interface TrendingFeed {
 
 export interface SuggestedUser {
   id: string;
-  name: string;
+  full_name: string;
   username: string;
   avatar: string;
   bio?: string;

@@ -20,6 +20,8 @@ import {
 import { PenNewSquare } from "@solar-icons/react";
 import { CreatePostForm } from "./create-post-form";
 
+import { CircleDot, CircleEllipsis, X } from "lucide-react";
+
 export function CreatePostDialog({
   children,
   trigger,
@@ -31,7 +33,7 @@ export function CreatePostDialog({
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const Trigger = trigger ? (
-    <div onClick={() => setOpen(true)}>{trigger}</div>
+    <div onClick={() => setOpen(true)} className="cursor-pointer">{trigger}</div>
   ) : (
     <Button
       variant="ghost"
@@ -47,25 +49,39 @@ export function CreatePostDialog({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{Trigger}</DialogTrigger>
-        <DialogContent className="sm:max-w-[600px] p-0 gap-0 overflow-hidden">
+        <DialogContent className="sm:max-w-[600px] p-0 gap-0 overflow-hidden rounded-3xl">
           <DialogHeader className="px-4 py-3 border-b">
             <DialogTitle>Create new post</DialogTitle>
           </DialogHeader>
-          <CreatePostForm onSuccess={() => setOpen(false)} />
+          <CreatePostForm onSuccess={() => setOpen(false)} className="h-[500px]" />
         </DialogContent>
       </Dialog>
     );
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>{Trigger}</DrawerTrigger>
-      <DrawerContent className="h-screen p-0 rounded-none">
-        <DrawerHeader className="px-4 py-3 text-left">
-          <DrawerTitle className="text-xl font-bold ">New Post</DrawerTitle>
-        </DrawerHeader>
-        <CreatePostForm onSuccess={() => setOpen(false)} />
-      </DrawerContent>
-    </Drawer>
+    <>
+      {Trigger}
+      {open && (
+        <div className="fixed inset-0 z-50 bg-background flex flex-col h-dvh animate-in ease-in-out slide-in-from-bottom-10 duration-300">
+          <div className="px-4 py-3 text-left border-b flex items-center justify-between shrink-0">
+            <button
+              onClick={() => setOpen(false)}
+              className="h-8 w-8 rounded-full hover:bg-muted"
+            >
+              <X size={24} />
+            </button>
+            <span className="text-xl font-bold">New Post</span>
+            <button
+              onClick={() => setOpen(false)}
+              className="h-8 w-8 rounded-full hover:bg-muted"
+            >
+              <CircleEllipsis size={24} />
+            </button>
+          </div>
+          <CreatePostForm onSuccess={() => setOpen(false)} className="flex-1 min-h-0" />
+        </div>
+      )}
+    </>
   );
 }

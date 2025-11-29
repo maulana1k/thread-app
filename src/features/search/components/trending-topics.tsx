@@ -28,11 +28,11 @@ export function TrendingTopics() {
   }
 
   return (
-    <div className="mx-4 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/40 overflow-hidden">
+    <div className="mx-4 rounded-3xl bg-card/30 backdrop-blur-sm border border-border/40 overflow-hidden">
       {topics.map((topic, index) => (
         <button
           key={topic.id}
-          className="w-full flex items-center justify-between p-4 border-b border-border/40 last:border-b-0 hover:bg-muted/30 active:bg-muted/50 transition-colors text-left"
+          className="w-full flex items-center justify-between py-3 px-4  border-b border-border/40 last:border-b-0 hover:bg-muted/30 active:bg-muted/50 transition-colors text-left"
         >
           <div className="flex-1 min-w-0">
             <h3 className="font-bold text-[17px] tracking-tight">

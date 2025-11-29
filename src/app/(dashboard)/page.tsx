@@ -47,8 +47,8 @@ export default function DashboardPage() {
         {/* <div className="text-xl font-semibold opacity-30">Following</div>
         <div className="text-xl font-semibold opacity-30">Saved</div> */}
       </div>
-      <div className="flex justify-between items-center lg:hidden gap-3 p-4 ">
-        <div className="flex items-center w-full gap-2 text-2xl font-bold">
+      <div className="flex justify-between items-center lg:hidden gap-3 p-3 ">
+        <div className="flex items-center w-full gap-2 text-3xl font-bold">
           <Link href="/" className="flex items-center gap-2 font-bold">
             Jends
           </Link>

@@ -73,10 +73,9 @@ export function InstallPWA() {
     }
   };
 
-  // Don't show button if PWA is not supported, already installed, or installing
-  // if (!supportsPWA || isInstalled) {
-  //   return null;
-  // }
+  if ((!supportsPWA || isInstalled) && process.env.NODE_ENV === "production") {
+    return null;
+  }
 
   return (
     <Button

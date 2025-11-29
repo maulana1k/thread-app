@@ -30,7 +30,7 @@ export function UserAvatar({
 }: UserAvatarProps) {
   return (
     <Avatar className={cn(sizeClasses[size], className)} {...props}>
-      {src && <AvatarImage src={src} alt={alt || "User avatar"} />}
+      {src && <AvatarImage src={src} alt={alt || "User avatar"} className="object-cover" />}
       <AvatarImage src="/blank-profile-picture.jpg" alt="Default avatar" />
       <AvatarFallback>{fallback?.[0]?.toUpperCase() || "?"}</AvatarFallback>
     </Avatar>

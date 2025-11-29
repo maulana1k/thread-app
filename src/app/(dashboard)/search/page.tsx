@@ -82,7 +82,7 @@ export default function SearchPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setIsFocused(true)}
-              className="w-full h-12 pl-12 pr-12 rounded-2xl bg-secondary/50 dark:bg-card/30 border border-border/40 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-muted-foreground/50"
+              className="w-full h-12 pl-12 pr-12 rounded-2xl bg-secondary dark:bg-card/50 border border-border/40 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-muted-foreground/50"
             />
             {searchQuery && (
               <button
@@ -131,7 +131,7 @@ export default function SearchPage() {
           {/* Trending Posts */}
           <div className="space-y-3">
             <div className="flex items-center justify-between px-4">
-              <h2 className="text-lg font-bold">Trending Posts</h2>
+              <h2 className="text-lg font-bold">You Might Like</h2>
               <button className="flex items-center gap-1 text-sm text-primary font-medium hover:opacity-80 transition-opacity">
                 See More
                 <AltArrowRight size={16} />

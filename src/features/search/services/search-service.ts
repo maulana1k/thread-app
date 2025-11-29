@@ -38,8 +38,6 @@ export const searchService = {
   getTrendingFeeds: async (): Promise<TrendingFeed[]> => {
     const supabase = createClient();
 
-    // Fetch posts with author and likes count
-    // We'll just fetch recent posts for now as "trending"
     const { data: posts, error } = await supabase
       .from("posts")
       .select(`
@@ -47,11 +45,11 @@ export const searchService = {
         content,
         image_url,
         created_at,
-        profiles!inner (
+        profiles:profiles!posts_user_id_fkey (
           username,
           full_name
         ),
-        likes (count)
+        likes:likes(count)
       `)
       .order("created_at", { ascending: false })
       .limit(10);
@@ -61,7 +59,7 @@ export const searchService = {
     return posts.map((post: any) => ({
       id: post.id,
       content: post.content,
-      imageUrl: post.image_url,
+      image_url: post.image_url,
       author: {
         name: post.profiles.full_name,
         username: post.profiles.username,
@@ -83,7 +81,7 @@ export const searchService = {
 
     return profiles.map((profile: any) => ({
       id: profile.id,
-      name: profile.full_name || profile.username,
+      full_name: profile.full_name,
       username: profile.username,
       avatar: profile.avatar_url,
       bio: profile.bio,
@@ -93,7 +91,7 @@ export const searchService = {
 
   search: async (
     query: string,
-  ): Promise<{ posts: TrendingFeed[]; users: SuggestedUser[] }> => {
+  ): Promise<{ posts: TrendingFeed[]; users: SuggestedUser[]; }> => {
     const supabase = createClient();
 
     // Search posts
@@ -124,7 +122,7 @@ export const searchService = {
       posts: (posts || []).map((post: any) => ({
         id: post.id,
         content: post.content,
-        imageUrl: post.image_url,
+        image_url: post.image_url,
         author: {
           name: post.profiles.full_name,
           username: post.profiles.username,
@@ -133,7 +131,7 @@ export const searchService = {
       })),
       users: (users || []).map((profile: any) => ({
         id: profile.id,
-        name: profile.full_name || profile.username,
+        full_name: profile.full_name,
         username: profile.username,
         avatar: profile.avatar_url,
         bio: profile.bio,

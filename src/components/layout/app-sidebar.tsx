@@ -4,14 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
-  Ghost,
   Home2,
-  Magnifer,
   Bell,
-  ChatRoundDots,
   User,
   PenNewSquare,
   Inbox,
+  Compass,
+  UserCheck,
+  ChatSquareLike,
+  Plain3,
 } from "@solar-icons/react/ssr";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { UserNav } from "@/components/layout/user-nav";
@@ -21,11 +22,14 @@ import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/auth-store";
 import { NotificationDrawer } from "@/components/notification-drawer";
 import { useState } from "react";
+import { CreatePostForm } from "@/features/feeds/components/create-post-form";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
 export function AppSidebar() {
   const pathname = usePathname();
   const { profile } = useAuthStore();
   const [notificationOpen, setNotificationOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const items = [
     {
@@ -36,18 +40,29 @@ export function AppSidebar() {
     {
       title: "Search",
       url: "/search",
-      icon: Magnifer,
+      icon: Compass,
+    },
+    {
+      title: "Following",
+      url: "/following",
+      icon: ChatSquareLike,
     },
     {
       title: "Notifications",
-      url: null, // Changed to null to indicate it's not a link
+      url: null,
       icon: Bell,
       onClick: () => setNotificationOpen(true),
     },
     {
       title: "Messages",
       url: "/messages",
-      icon: Inbox,
+      icon: Plain3,
+    },
+    {
+      title: "Create",
+      url: null,
+      icon: PenNewSquare,
+      onClick: () => setOpen(true),
     },
     {
       title: "Profile",
@@ -65,18 +80,16 @@ export function AppSidebar() {
       </div>
 
       <div className="flex-1 overflow-y-auto py-4 px-4">
-        <nav className="flex flex-col">
+        <nav className="flex flex-col gap-1">
           {items.map((item) => {
             const isActive = pathname === item.url;
-
-            // Render as button for Notifications
             if (item.onClick) {
               return (
                 <button
                   key={item.title}
                   onClick={item.onClick}
                   className={cn(
-                    "flex items-center gap-4 rounded-full px-4 py-3 text-sm font-regular transition-colors hover:bg-accent hover:text-accent-foreground",
+                    "flex items-center gap-4 rounded-2xl px-3 py-2 text-sm font-regular transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer",
                     isActive ? "font-bold" : "",
                   )}
                 >
@@ -86,13 +99,12 @@ export function AppSidebar() {
               );
             }
 
-            // Render as link for other items
             return (
               <Link
                 key={item.title}
                 href={item.url}
                 className={cn(
-                  "flex items-center gap-4 rounded-full px-4 py-3 text-sm font-regular transition-colors hover:bg-accent hover:text-accent-foreground",
+                  "flex items-center gap-4 rounded-2xl px-3 py-2 text-sm font-regular transition-colors hover:bg-accent hover:text-accent-foreground",
                   isActive ? "font-bold" : "",
                 )}
               >
@@ -103,29 +115,19 @@ export function AppSidebar() {
           })}
         </nav>
       </div>
-
-      <div className="p-4 mt-auto">
-        <CreatePostDialog
-          trigger={
-            <Button
-              className="w-full rounded-full gap-2 font-bold text-md"
-              size="lg"
-            >
-              <PenNewSquare size={20} weight="Bold" />
-              Post
-            </Button>
-          }
-        />
-      </div>
-
-      <div className="p-4 pt-0">
-        <div className="flex items-center justify-between gap-4 px-2">
-          <UserNav />
-          <div className="flex items-center gap-1">
-            <ThemeToggle />
-            <InstallPWA />
-          </div>
+        <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-[600px] p-0 gap-0 overflow-hidden">
+          <DialogHeader className="px-4 py-3 border-b">
+            <DialogTitle>Create new post</DialogTitle>
+          </DialogHeader>
+          <CreatePostForm onSuccess={() => setOpen(false)} className="h-[500px]" />
+        </DialogContent>
+      </Dialog>
+      <div className="px-6 py-4 text-muted-foreground/70 font-medium">
+        <div className="flex text-sm items-center justify-between gap-4">
+          About &middot; Help &middot; Privacy &middot; Terms &middot; Cookies &middot; Support
         </div>
+        <span className="text-sm">© 2025 Jends</span>
       </div>
 
       <NotificationDrawer

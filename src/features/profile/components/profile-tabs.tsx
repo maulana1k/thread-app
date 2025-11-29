@@ -5,8 +5,6 @@ import { useProfileStore } from "../store/profile-store";
 import {
   Bookmark,
   Camera,
-  DocumentText,
-  GalleryMinimalistic,
   Notes,
   Refresh,
 } from "@solar-icons/react";
@@ -16,7 +14,7 @@ export function ProfileTabs() {
 
   const tabs = [
     { id: "posts", icon: Notes, label: "Posts" },
-    { id: "replies", icon: Refresh, label: "Replies" },
+    { id: "repost", icon: Refresh, label: "Repost" },
     { id: "media", icon: Camera, label: "Media" },
     { id: "saved", icon: Bookmark, label: "Saved" },
   ] as const;

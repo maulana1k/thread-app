@@ -23,7 +23,7 @@ export function ImageLoader({ className, ...props }: ImageProps) {
           className,
           loading ? "opacity-0" : "opacity-100",
         )}
-        onLoadingComplete={() => setLoading(false)}
+        onLoad={() => setLoading(false)}
       />
     </div>
   );

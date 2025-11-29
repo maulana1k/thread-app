@@ -10,6 +10,8 @@ interface TrendingFeedCardProps {
 
 export function TrendingFeedCard({ feed }: TrendingFeedCardProps) {
   const router = useRouter();
+  console.log(feed.image_url);
+
 
   const handleClick = () => {
     router.push(`/post/${feed.id}`);
@@ -32,19 +34,24 @@ export function TrendingFeedCard({ feed }: TrendingFeedCardProps) {
             {feed.content}
           </p>
           <div className="flex items-center gap-1 text-muted-foreground">
-            <Heart size={16} />
-            <span className="text-xs">{formatNumber(feed.likes)}</span>
+            <span className="font-semibold text-xs">{formatNumber(feed.likes)}</span>
+            <span className="text-xs">likes</span>
           </div>
         </div>
-        {feed.imageUrl && (
-          <div className="w-20 h-20 shrink-0 rounded-lg overflow-hidden bg-muted">
-            <ImageLoader
-              src={feed.imageUrl}
-              alt="Post preview"
-              className="w-full h-full aspect-square object-cover rounded-lg"
-            />
-          </div>
-        )}
+        {feed.image_url && (() => {
+          const imageUrl = JSON.parse(feed.image_url);
+          const images = Array.isArray(imageUrl) ? imageUrl[0] : imageUrl;
+          console.log(imageUrl);
+          
+          return (
+            <div className="w-20 h-20 shrink-0 rounded-lg overflow-hidden bg-muted">
+              <ImageLoader
+                src={images}
+                alt="Post preview"
+                className="w-full h-full aspect-square object-cover rounded-lg"
+              />
+            </div>);
+        })()}
       </div>
     </div>
   );

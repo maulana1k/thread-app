@@ -38,7 +38,7 @@ export const profileService = {
 
   getPosts: async (
     username: string,
-    type: "posts" | "replies" | "media" | "saved",
+    type: "posts" | "repost" | "media" | "saved",
   ): Promise<ProfilePost[]> => {
     const supabase = createClient();
 
@@ -81,5 +81,30 @@ export const profileService = {
       comments_count: post.comments?.[0]?.count ?? 0,
       type: post.image_url ? "media" : "post", // Simple inference
     }));
+  },
+  updateProfile: async (
+    userId: string,
+    updates: Partial<Pick<Profile, "full_name" | "username" | "bio" | "avatar_url">>
+  ): Promise<Profile> => {
+    const supabase = createClient();
+
+    const { data, error } = await supabase
+      .from("profiles")
+      .update(updates)
+      .eq("id", userId)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    return {
+      ...data,
+      stats: {
+        following: 0,
+        followers: 0,
+        likes: 0,
+      },
+      isVerified: false,
+    };
   },
 };
