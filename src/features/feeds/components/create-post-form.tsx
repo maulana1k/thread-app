@@ -97,7 +97,7 @@ export function CreatePostForm({ onSuccess, className }: { onSuccess?: () => voi
               }
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="min-h-8 dark:bg-transparent resize-none border-none focus-visible:ring-0 p-0 text-lg placeholder:text-muted-foreground/50 shadow-none"
+              className="min-h-8 dark:bg-transparent resize-none border-none focus-visible:ring-0 p-0 md:text-xl placeholder:text-muted-foreground/50 md:placeholder:text-xl shadow-none"
             />
 
 
@@ -128,7 +128,7 @@ export function CreatePostForm({ onSuccess, className }: { onSuccess?: () => voi
       </div>
 
       {/* Fixed Action Buttons */}
-      <div className="p-4 border-t bg-background flex items-center justify-between shrink-0">
+      <div className="p-4 border-t flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
           <input
             type="file"

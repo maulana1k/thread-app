@@ -8,17 +8,10 @@ import {
   Bell,
   User,
   PenNewSquare,
-  Inbox,
-  Compass,
+  Plain3,   
+  Magnifer,
   UserCheck,
-  ChatSquareLike,
-  Plain3,
 } from "@solar-icons/react/ssr";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { UserNav } from "@/components/layout/user-nav";
-import { InstallPWA } from "@/components/install-pwa";
-import { CreatePostDialog } from "@/features/feeds/components/create-post-dialog";
-import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/auth-store";
 import { NotificationDrawer } from "@/components/notification-drawer";
 import { useState } from "react";
@@ -40,12 +33,12 @@ export function AppSidebar() {
     {
       title: "Search",
       url: "/search",
-      icon: Compass,
+      icon: Magnifer,
     },
     {
       title: "Following",
       url: "/following",
-      icon: ChatSquareLike,
+      icon: UserCheck,
     },
     {
       title: "Notifications",
@@ -89,8 +82,8 @@ export function AppSidebar() {
                   key={item.title}
                   onClick={item.onClick}
                   className={cn(
-                    "flex items-center gap-4 rounded-2xl px-3 py-2 text-sm font-regular transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer",
-                    isActive ? "font-bold" : "",
+                    "flex items-center icon gap-4 rounded-2xl px-3 py-2 text-sm font-regular transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer",
+                    isActive ? "font-extrabold" : "font-medium",
                   )}
                 >
                   <item.icon size={24} weight={isActive ? "Bold" : "Linear"} />
@@ -104,8 +97,8 @@ export function AppSidebar() {
                 key={item.title}
                 href={item.url}
                 className={cn(
-                  "flex items-center gap-4 rounded-2xl px-3 py-2 text-sm font-regular transition-colors hover:bg-accent hover:text-accent-foreground",
-                  isActive ? "font-bold" : "",
+                  "flex items-center icon gap-4 rounded-2xl px-3 py-2 text-sm font-regular transition-colors hover:bg-accent hover:text-accent-foreground",
+                  isActive ? "font-extrabold" : "font-medium",
                 )}
               >
                 <item.icon size={24} weight={isActive ? "Bold" : "Linear"} />
@@ -115,9 +108,9 @@ export function AppSidebar() {
           })}
         </nav>
       </div>
-        <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[600px] p-0 gap-0 overflow-hidden">
-          <DialogHeader className="px-4 py-3 border-b">
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-xl rounded-3xl p-0 gap-0 overflow-hidden bg-background/80 backdrop-blur-xl border shadow-2xl">
+          <DialogHeader className="px-8 py-6 border-b ">
             <DialogTitle>Create new post</DialogTitle>
           </DialogHeader>
           <CreatePostForm onSuccess={() => setOpen(false)} className="h-[500px]" />

@@ -3,9 +3,9 @@ import { ProfileSkeleton } from "./profile-skeleton";
 
 export function ProfilePageSkeleton() {
   return (
-    <div className="min-h-screen bg-background pb-20">
+    <div className="min-h-screen bg-background lg:max-w-xl mx-auto pb-20">
       {/* Sticky Header Skeleton */}
-      <div className="sticky top-0 z-20 bg-background/80 backdrop-blur-xl border-b border-border/40 px-4 h-[52px] flex items-center justify-between">
+      <div className="sticky lg:hidden top-0 z-20 bg-background/80 backdrop-blur-xl border-b border-border/40 px-4 h-[52px] flex items-center justify-between">
         <Skeleton className="h-8 w-8 rounded-full" />
         <Skeleton className="h-6 w-32" />
         <Skeleton className="h-8 w-8 rounded-full" />
@@ -15,11 +15,7 @@ export function ProfilePageSkeleton() {
       <div className="flex flex-col lg:flex-row lg:gap-8 pt-8 pb-4 px-4">
         {/* Avatar & User Info Section */}
         <div className="flex gap-3 items-center lg:items-start">
-          <Skeleton className="h-24 w-24 lg:h-40 lg:w-40 rounded-full mb-4 border-2 border-background shadow-sm" />
-          <div className="flex flex-col gap-2 mb-1 lg:mt-4">
-            <Skeleton className="h-7 w-48 lg:w-64" /> {/* Name */}
-            <Skeleton className="h-5 w-32 lg:w-40" /> {/* Username */}
-          </div>
+          <Skeleton className="size-28 lg:h-40 lg:w-40 rounded-full mb-4 border-2 border-background shadow-sm" />
         </div>
 
         {/* Stats, Actions & Bio Section */}

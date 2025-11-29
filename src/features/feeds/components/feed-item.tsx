@@ -24,6 +24,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { DialogTitle } from "@/components/ui/dialog";
+import Link from "next/link";
+import { Like } from "@solar-icons/react/ssr";
 
 interface FeedItemProps {
   post: Post;
@@ -49,7 +51,7 @@ export function FeedItem({ post }: FeedItemProps) {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
     const center = container.scrollLeft + container.offsetWidth / 2;
-    
+
     let closestIndex = 0;
     let minDistance = Infinity;
 
@@ -57,7 +59,7 @@ export function FeedItem({ post }: FeedItemProps) {
       const element = child as HTMLElement;
       const childCenter = element.offsetLeft + element.offsetWidth / 2;
       const distance = Math.abs(childCenter - center);
-      
+
       if (distance < minDistance) {
         minDistance = distance;
         closestIndex = index;
@@ -114,53 +116,51 @@ export function FeedItem({ post }: FeedItemProps) {
 
   return (
     <div className="shadow-none border-none p-0">
-      <div className="flex flex-row gap-2">
-        <UserAvatar
-          className="flex md:hidden"
-          size="md"
-          src={post.profiles?.avatar_url}
-          alt={post.profiles?.username}
-          fallback={post.profiles?.username}
-        />
+      <div className="flex flex-row gap-3">
+        <Link href={`/${post.profiles?.username}`}>
+          <UserAvatar
+            className="flex "
+            size="md"
+            src={post.profiles?.avatar_url}
+            alt={post.profiles?.username}
+            fallback={post.profiles?.username}
+          />
+        </Link>
         <div className="flex flex-col w-full -mt-1 ">
           <div className="flex justify-between items-center">
-            <div className="flex gap-1 items-center">
-              <UserAvatar
-                className="hidden md:flex mr-1"
-                size="sm"
-                src={post.profiles?.avatar_url}
-                alt={post.profiles?.username}
-                fallback={post.profiles?.username}
-              />
-              <span className="font-semibold text-base leading-none">
-                {post.is_anonymous
-                  ? "Anonymous"
-                  : post.profiles?.username || "Unknown User"}
-              </span>
-              <span className="text-sm text-muted-foreground leading-none">
-                &middot; {formatTimeAgo(post.created_at)}
-              </span>
-            </div>
+            <Link href={`/${post.profiles?.username}`}>
+              <div className="flex gap-1 items-center">
+                <span className="font-semibold text-base leading-none">
+                  {post.is_anonymous
+                    ? "Anonymous"
+                    : post.profiles?.username || "Unknown User"}
+                </span>
+                <span className="text-sm text-muted-foreground leading-none">
+                  &middot; {formatTimeAgo(post.created_at)}
+                </span>
+              </div>
+            </Link>
 
             {/* Desktop Dropdown Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="hidden md:flex">
-                <div className="rounded-full">
+                <div className="rounded-full cursor-pointer hover:opacity-80">
                   <MenuDots size={21} weight="Bold" />
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" className="w-48 rounded-xl">
                 {menuItems.map((item) => (
                   <DropdownMenuItem
                     key={item.label}
                     onClick={item.onClick}
-                    className={
+                    className={cn(
                       item.variant === "destructive"
                         ? "text-destructive focus:text-destructive"
-                        : ""
-                    }
+                        : "",
+                      "flex items-center gap-2 text-md rounded-[12px]"
+                    )}
                   >
-                    <item.icon size={18} className="mr-2" />
+                    <item.icon size={24} className="mr-2 text-lg shrink-0" />
                     {item.label}
                   </DropdownMenuItem>
                 ))}
@@ -197,7 +197,7 @@ export function FeedItem({ post }: FeedItemProps) {
             </Drawer>
           </div>
           <div
-            className="pt-1 md:pt-3 cursor-pointer"
+            className="cursor-pointer"
             onClick={handlePostClick}
           >
             <p className="text-md">{post.content}</p>
@@ -213,27 +213,27 @@ export function FeedItem({ post }: FeedItemProps) {
                 />
               ) : (
                 <div className="relative group">
-                  <div 
+                  <div
                     ref={scrollContainerRef}
                     onScroll={handleScroll}
-                    className="flex gap-2 w-[80dvw] lg:w-auto overflow-x-auto no-scrollbar pb-2 snap-x snap-mandatory"
+                    className="flex gap-2 w-[80dvw] lg:w-full overflow-x-auto no-scrollbar pb-2 snap-x snap-mandatory"
                   >
                     {images.map((url, index) => (
                       <div key={index} className="relative shrink-0 snap-center">
                         <img
                           src={url}
                           alt={`Post content ${index + 1}`}
-                          className="h-auto max-h-[300px] w-auto max-w-[80dvw] lg:w-auto rounded-lg border bg-muted/20"
+                          className="h-auto max-h-[300px] w-auto max-w-[80dvw] lg:w-full rounded-lg border bg-muted/20"
                         />
                       </div>
                     ))}
                   </div>
                   <div className="flex justify-center gap-1.5 mt-2">
                     {images.map((_, idx) => (
-                      <div 
-                        key={idx} 
+                      <div
+                        key={idx}
                         className={cn(
-                          "h-1 rounded-full transition-all duration-300", 
+                          "h-1 rounded-full transition-all duration-300",
                           idx === currentImageIndex ? "bg-primary w-3" : "bg-primary/20 w-1"
                         )}
                       />
@@ -246,8 +246,8 @@ export function FeedItem({ post }: FeedItemProps) {
 
           <div className="flex pt-3">
             <div className="flex gap-4">
-              <button className="flex items-center gap-2">
-                <Heart size={23} />
+              <button className="flex items-center gap-2 icon">
+                <Heart weight="Linear" size={23} className="mr-1 icon" />
                 {!!post.likes_count && (
                   <span className="text-sm">{post.likes_count}</span>
                 )}

@@ -12,13 +12,12 @@ export default function DashboardLayout({
   return (
     <div className="flex min-h-dvh w-full">
       <AppSidebar />
-      <div className="fixed top-4 right-4 hidden md:flex gap-4 items-center">
-        <ThemeToggle />
-        <InstallPWA />
-        <UserNav />
-
-      </div>
       <main className="flex-1 w-full relative pb-[env(safe-area-inset-bottom)]">
+        <div className="fixed px-2 py-1 bg-muted/50 rounded-full top-4 right-4 hidden md:flex gap-4 items-center">
+          <InstallPWA />
+          <ThemeToggle />
+          <UserNav />
+        </div>
         <div className="mx-auto p-0 pb-20 lg:pb-0">{children}</div>
         <MobileNav />
       </main>

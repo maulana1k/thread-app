@@ -40,15 +40,15 @@ export function ProfileHeader({
   };
 
   return (
-    <div className="flex flex-col lg:flex-row lg:gap-8 pt-4 pb-4 px-4">
-      <div className="flex gap-3 items-center">
+    <div className="flex flex-col lg:flex-row lg:max-w-xl mx-auto lg:gap-8 pt-4 lg:pt-12 pb-4 px-4">
+      <div className="flex gap-3 items-center lg:items-start">
         <UserAvatar
           src={profile.avatar_url}
           fallback={profile?.full_name}
           size="2xl"
           className="mb-4 lg:size-40 border-2 border-background shadow-sm"
         />
-        <div className="flex flex-col gap-1 mb-1">
+        <div className="flex lg:hidden flex-col gap-1 mb-1">
           <h1 className="text-xl font-bold">{profile.full_name}</h1>
           {profile.isVerified && (
             <VerifiedCheck size={18} className="text-blue-500" weight="Bold" />
@@ -59,7 +59,15 @@ export function ProfileHeader({
         </div>
       </div>
       <div className="flex flex-col lg:items-start">
-
+        <div className="hidden lg:flex gap-1">
+          <h1 className="text-xl font-bold">{profile.full_name}</h1>
+          {profile.isVerified && (
+            <VerifiedCheck size={18} className="text-blue-500" weight="Bold" />
+          )}
+          <p className="mb-2 lg:text-xl lg:font-semibold">
+            @{profile.username}
+          </p>
+        </div>
         <div className="flex gap-6 mb-3 text-sm">
           <div className="flex gap-1 items-center">
             <span className="font-bold">

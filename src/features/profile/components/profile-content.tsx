@@ -12,9 +12,11 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
-import { Bookmark, Camera, Notes, Refresh } from "@solar-icons/react";
+import { useRouter } from "next/navigation";
+import { Bookmark, Camera, Notes, Refresh, Layers } from "@solar-icons/react";
 
 export function ProfileContent({ username }: { username: string }) {
+  const router = useRouter();
   const { activeTab } = useProfileStore();
   const { posts, isLoading } = useProfilePosts(username, activeTab);
 
@@ -53,7 +55,7 @@ export function ProfileContent({ username }: { username: string }) {
     const Icon = emptyStateContent.icon;
 
     return (
-      <div className="flex flex-col items-center justify-center py-32 animate-in fade-in duration-500">
+      <div className="flex flex-col lg:max-w-xl mx-auto items-center justify-center py-32 animate-in fade-in duration-500">
         <Empty className="border-none p-0">
           <EmptyHeader>
             <EmptyMedia className="bg-transparent mb-6">
@@ -75,24 +77,52 @@ export function ProfileContent({ username }: { username: string }) {
 
   if (activeTab === "media") {
     return (
-      <div className="grid grid-cols-3 gap-0.5">
-        {posts.map((post) => (
-          <div key={post.id} className="aspect-3/4 relative bg-muted">
-            {post.image_url && (
-              <ImageLoader
-                src={post.image_url}
-                alt="Post"
-                className="w-full h-full object-cover rounded-none"
-              />
-            )}
-          </div>
-        ))}
+      <div className="grid grid-cols-3 gap-0.5 lg:max-w-xl mx-auto">
+        {posts.map((post) => {
+          let imageUrl = post.image_url;
+          let isMultiple = false;
+          try {
+            if (imageUrl) {
+              const parsed = JSON.parse(imageUrl);
+              if (Array.isArray(parsed)) {
+                imageUrl = parsed[0];
+                isMultiple = parsed.length > 1;
+              }
+            }
+          } catch (e) {
+            // ignore
+          }
+
+          return (
+            <div
+              key={post.id}
+              className="aspect-3/4 relative bg-muted cursor-pointer group overflow-hidden"
+              onClick={() => router.push(`/post/${post.id}`)}
+            >
+              {imageUrl && (
+                <>
+                  <ImageLoader
+                    src={imageUrl}
+                    alt="Post"
+                    className="w-full h-full object-cover rounded-none transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {isMultiple && (
+                    <div className="absolute top-2 right-2 text-white drop-shadow-md">
+                      <Layers size={20} weight="Bold" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+                </>
+              )}
+            </div>
+          );
+        })}
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col divide-y divide-border/40 pb-20">
+    <div className="flex flex-col lg:max-w-xl mx-auto divide-y divide-border/40 pb-20">
       {posts.map((post) => (
         <div key={post.id} className="p-4 border-b border-border/40">
           <FeedItem post={post} />

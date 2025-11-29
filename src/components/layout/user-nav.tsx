@@ -9,12 +9,11 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLogout, useUser } from "@/features/auth/hooks/use-auth";
-import { LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
+import { CrownLine, Logout2, Settings, User} from "@solar-icons/react";
 
 export function UserNav() {
   const { data: user } = useUser();
@@ -40,37 +39,43 @@ export function UserNav() {
           />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" >
-        <DropdownMenuLabel className="font-normal">
+      <DropdownMenuContent sideOffset={15} className="w-56 mr-5 rounded-[20px]" >
+        <DropdownMenuLabel className="font-normal p-4">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
+            <p className="text-base font-medium leading-none">
               {user?.user_metadata?.full_name}
             </p>
-            <p className="text-xs leading-none text-muted-foreground">
+            <p className="text-sm leading-none text-muted-foreground">
               {user?.email}
             </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
+          <DropdownMenuItem asChild className="text-base icon font-medium rounded-xl m-1 ">
             <Link href="/profile">
-              <User className="mr-2 h-4 w-4" />
+              <User weight="Linear" className="mr-2 size-5 text-foreground" />
               <span>Profile</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
+          <DropdownMenuItem asChild className="text-base icon font-medium rounded-xl m-1 ">
             <Link href="/settings">
-              <Settings className="mr-2 h-4 w-4" />
+              <Settings weight="Linear" className="mr-2 size-5 text-foreground" />
               <span>Settings</span>
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => logout()}>
-          <LogOut className="mr-2 h-4 w-4" />
+        <DropdownMenuItem onClick={() => logout()} className="text-base icon font-medium rounded-xl m-1 ">
+          <Logout2 weight="Linear" className="mr-2 size-5 text-foreground" />
           <span>Log out</span>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <div className="m-2">
+          <Button  variant="outline" className="w-full rounded-xl font-semibold icon">
+            <CrownLine weight="Linear" className="mr-2 size-5 text-foreground" />
+            <span>Upgrade to Pro</span>
+          </Button>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

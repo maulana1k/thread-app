@@ -45,7 +45,7 @@ export function LoginForm() {
 
   return (
     <div className="w-full max-w-md mx-auto px-4 smooth-fade-in">
-      <div className="bg-card rounded-[20px]  p-6 sm:p-8">
+      <div className="bg-background rounded-[20px]  p-6 sm:p-8">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-2">Welcome Back</h1>

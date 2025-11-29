@@ -126,8 +126,8 @@ export function EditProfileDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
-      <DialogContent className="sm:max-w-[425px] rounded-3xl p-0 gap-0 overflow-hidden bg-background/80 backdrop-blur-xl border-none shadow-2xl">
-        <DialogHeader className="px-6 py-4 border-b border-border/10 bg-transparent">
+      <DialogContent className="sm:max-w-lg rounded-3xl p-0 gap-0 overflow-hidden bg-background/80 backdrop-blur-xl border shadow-2xl">
+        <DialogHeader className="px-6 py-4 border-b border-border bg-transparent">
           <DialogTitle className="text-center text-lg font-semibold">
             Edit Profile
           </DialogTitle>

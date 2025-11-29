@@ -20,14 +20,14 @@ export function ProfileTabs() {
   ] as const;
 
   return (
-    <div className="sticky top-[52px] z-10 bg-background/80 backdrop-blur-lg border-b border-border/40">
+    <div className="sticky top-[52px] lg:top-0 lg:max-w-2xl mx-auto z-10 bg-background/80 backdrop-blur-lg border-b border-border/40">
       <div className="flex">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={cn(
-              "flex-1 flex items-center justify-center py-3 relative transition-colors",
+              "flex-1 flex items-center  justify-center py-3 relative transition-colors",
               activeTab === tab.id
                 ? "text-foreground"
                 : "text-muted-foreground hover:text-foreground/80",
