@@ -51,12 +51,12 @@ export function MobileNav() {
                 trigger={
                   <button
                     className={cn(
-                      "flex icon flex-col items-center justify-center gap-1 py-3 text-muted-foreground transition-colors hover:text-foreground",
+                      "flex icon flex-col items-center justify-center gap-1 py-3 text-neutral-600 transition-colors hover:text-foreground",
                       isActive && "text-foreground",
                     )}
                   >
                     <item.icon
-                      size={30}
+                      size={28}
                       weight={isActive ? "Bold" : "Linear"}
                     />
                   </button>
@@ -70,11 +70,11 @@ export function MobileNav() {
               key={item.title}
               href={item.url}
               className={cn(
-                "flex icon flex-col items-center justify-center gap-1 py-3 text-muted-foreground transition-colors hover:text-foreground",
+                "flex icon flex-col items-center justify-center gap-1 py-3 text-neutral-600 transition-colors hover:text-foreground",
                 isActive && "text-foreground",
               )}
             >
-              <item.icon size={30} weight={isActive ? "Bold" : "Linear"} />
+              <item.icon size={28} weight={isActive ? "Bold" : "Linear"} />
             </Link>
           );
         })}

@@ -10,6 +10,7 @@ import { InstallPWA } from "@/components/install-pwa";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { NotificationDrawer } from "@/components/notification-drawer";
+import { UserNav } from "@/components/layout/user-nav";
 
 interface TopicPillProps {
   label: string;
@@ -41,6 +42,10 @@ export default function DashboardPage() {
 
   return (
     <div className="container mx-auto max-w-xl ">
+      <div className="fixed p-3 bg-muted/50 rounded-full top-4 right-4 hidden md:flex gap-4 items-center">
+        <InstallPWA />
+        <UserNav />
+      </div>
       <div className="hidden lg:flex justify-center items-center gap-1 py-6 px-3 ">
         <div className="text-lg font-bold">For You</div>
         <ChevronDown size={18} className="opacity-50" />

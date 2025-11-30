@@ -14,13 +14,16 @@ import {
 import { useLogout, useUser } from "@/features/auth/hooks/use-auth";
 import Link from "next/link";
 import { CrownLine, Logout2, Settings, User} from "@solar-icons/react";
+import { useProfile } from "@/features/profile/hooks/use-profile";
+import { ThemeToggle } from "../theme-toggle";
 
 export function UserNav() {
-  const { data: user } = useUser();
+  const { data: user } = useUser()
+  const { profile, isLoading } = useProfile(user?.user_metadata?.username);
   const { mutate: logout } = useLogout();
 
   const initials =
-    user?.user_metadata?.full_name
+    profile?.full_name
       ?.split(" ")
       .map((n: string) => n[0])
       .join("")
@@ -32,18 +35,18 @@ export function UserNav() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <UserAvatar
-            size="sm"
-            src={user?.user_metadata?.avatar_url}
-            alt={user?.user_metadata?.username}
+            size="md"
+            src={profile?.avatar_url}
+            alt={profile?.username}
             fallback={initials}
           />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent sideOffset={15} className="w-56 mr-5 rounded-[20px]" >
         <DropdownMenuLabel className="font-normal p-4">
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-2">
             <p className="text-base font-medium leading-none">
-              {user?.user_metadata?.full_name}
+              {profile?.full_name}
             </p>
             <p className="text-sm leading-none text-muted-foreground">
               {user?.email}
@@ -69,6 +72,11 @@ export function UserNav() {
           <Logout2 weight="Linear" className="mr-2 size-5 text-foreground" />
           <span>Log out</span>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <div className="flex py-2 px-2 items-center justify-between text-base icon font-medium rounded-xl m-1 ">
+            <span>Theme</span>
+            <ThemeToggle />
+        </div>
         <DropdownMenuSeparator />
         <div className="m-2">
           <Button  variant="outline" className="w-full rounded-xl font-semibold icon">

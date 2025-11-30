@@ -59,14 +59,14 @@ export function ProfileHeader({
         </div>
       </div>
       <div className="flex flex-col lg:items-start">
-        <div className="hidden lg:flex gap-1">
-          <h1 className="text-xl font-bold">{profile.full_name}</h1>
+        <div className="hidden lg:flex flex-col gap-1 mb-3">
+          <p className="text-base font-medium">
+            {profile.username}
+          </p>
+          <h1 className="text-2xl font-bold">{profile.full_name}</h1>
           {profile.isVerified && (
             <VerifiedCheck size={18} className="text-blue-500" weight="Bold" />
           )}
-          <p className="mb-2 lg:text-xl lg:font-semibold">
-            @{profile.username}
-          </p>
         </div>
         <div className="flex gap-6 mb-3 text-sm">
           <div className="flex gap-1 items-center">
@@ -85,9 +85,8 @@ export function ProfileHeader({
         <div className="mb-6 max-w-md">
           <p
             ref={bioRef}
-            className={`text-sm whitespace-pre-wrap leading-relaxed ${
-              !isExpanded ? "line-clamp-3" : ""
-            }`}
+            className={`text-sm whitespace-pre-wrap leading-relaxed ${!isExpanded ? "line-clamp-3" : ""
+              }`}
           >
             {profile.bio}
           </p>

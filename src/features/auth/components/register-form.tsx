@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, RegisterCredentials } from "../types";
 import { useRegister, useGoogleLogin } from "../hooks/use-auth";
+import { authService } from "../services/auth-service";
 import { AuthButton } from "./auth-button";
 import { AuthInput } from "./auth-input";
 import { SocialAuthButtons } from "./social-auth-buttons";
@@ -11,30 +12,55 @@ import { AuthDivider } from "./auth-divider";
 import Link from "next/link";
 import { toast } from "sonner";
 
-export function RegisterForm() {
+interface RegisterFormProps {
+  onSuccess?: (email: string) => void;
+}
+
+export function RegisterForm({ onSuccess }: RegisterFormProps) {
   const { mutate: register, isPending } = useRegister();
   const { mutate: googleLogin, isPending: isGoogleLoading } = useGoogleLogin();
 
   const {
     register: registerField,
     handleSubmit,
-    formState: { errors },
+    setError,
+    formState: { errors, isSubmitting },
   } = useForm<RegisterCredentials>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
       password: "",
-      fullName: "",
       username: "",
     },
   });
 
-  function onSubmit(values: RegisterCredentials) {
-    register(values, {
-      onError: (error: any) => {
-        toast.error(error.message || "Failed to create account");
-      },
-    });
+  async function onSubmit(values: RegisterCredentials) {
+    try {
+      // Check username uniqueness
+      const isAvailable = await authService.checkUsernameAvailability(
+        values.username,
+      );
+
+      if (!isAvailable) {
+        setError("username", {
+          type: "manual",
+          message: "Username is already taken",
+        });
+        return;
+      }
+
+      register(values, {
+        onSuccess: () => {
+          onSuccess?.(values.email);
+        },
+        onError: (error: any) => {
+          console.log(error);
+          toast.error(error.message || "Failed to create account");
+        },
+      });
+    } catch (error) {
+      toast.error("Failed to validate username");
+    }
   }
 
   function handleGoogleSignIn() {
@@ -47,7 +73,7 @@ export function RegisterForm() {
 
   return (
     <div className="w-full max-w-md mx-auto px-4 smooth-fade-in">
-      <div className="bg-card rounded-[20px] shadow-ios-medium p-6 sm:p-8">
+      <div className="rounded-[20px] shadow-ios-medium p-6 sm:p-8">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-2">Create Account</h1>
@@ -66,13 +92,6 @@ export function RegisterForm() {
 
         {/* Email Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <AuthInput
-            label="Full Name"
-            type="text"
-            error={errors.fullName?.message}
-            {...registerField("fullName")}
-          />
-
           <AuthInput
             label="Username"
             type="text"
@@ -95,7 +114,11 @@ export function RegisterForm() {
           />
 
           <div className="pt-2">
-            <AuthButton type="submit" variant="primary" isLoading={isPending}>
+            <AuthButton
+              type="submit"
+              variant="primary"
+              isLoading={isPending || isSubmitting}
+            >
               Create Account
             </AuthButton>
           </div>
@@ -107,7 +130,7 @@ export function RegisterForm() {
             Already have an account?{" "}
             <Link
               href="/login"
-              className="text-[var(--ios-blue)] font-semibold hover:underline transition-all"
+              className="text-blue-500 font-semibold hover:underline transition-all"
             >
               Sign In
             </Link>

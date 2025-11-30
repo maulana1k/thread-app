@@ -19,7 +19,7 @@ export function FeedList() {
   if (error) return <div>Error loading feed</div>;
 
   return (
-    <div className="flex flex-col md:gap-2 border-[0.5px] rounded-t-3xl border-border/70">
+    <div className="flex flex-col md:gap-2 md:border-[0.5px] md:rounded-t-3xl border-border/70">
       {posts?.map((post) => (
         <div
           key={post.id}

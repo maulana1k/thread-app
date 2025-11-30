@@ -19,7 +19,6 @@ export const authApi = {
       password: credentials.password,
       options: {
         data: {
-          full_name: credentials.fullName,
           username: credentials.username,
         },
       },
@@ -89,5 +88,39 @@ export const authApi = {
       .single();
     if (error) throw error;
     return data?.onboarding_completed ?? false;
+  },
+
+  resendVerificationEmail: async (email: string) => {
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.resend({
+      type: "signup",
+      email: email,
+    });
+    if (error) throw error;
+    return data;
+  },
+
+  checkUsernameAvailability: async (username: string) => {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("username")
+      .eq("username", username)
+      .maybeSingle();
+    
+    if (error) throw error;
+    // Returns true if username is available (not found)
+    return data === null;
+  },
+
+  verifyEmailOtp: async (email: string, token: string) => {
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.verifyOtp({
+      email,
+      token,
+      type: "signup",
+    });
+    if (error) throw error;
+    return data;
   },
 };

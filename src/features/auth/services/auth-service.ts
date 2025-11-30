@@ -33,4 +33,16 @@ export const authService = {
   checkOnboardingStatus: async (userId: string) => {
     return await authApi.checkOnboardingStatus(userId);
   },
+
+  resendVerificationEmail: async (email: string) => {
+    return await authApi.resendVerificationEmail(email);
+  },
+
+  checkUsernameAvailability: async (username: string) => {
+    return await authApi.checkUsernameAvailability(username);
+  },
+
+  verifyEmailOtp: async (email: string, token: string) => {
+    return await authApi.verifyEmailOtp(email, token);
+  },
 };

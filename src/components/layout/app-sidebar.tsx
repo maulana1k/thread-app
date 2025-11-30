@@ -82,7 +82,7 @@ export function AppSidebar() {
                   key={item.title}
                   onClick={item.onClick}
                   className={cn(
-                    "flex items-center icon gap-4 rounded-2xl px-3 py-2 text-sm font-regular transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer",
+                    "flex items-center icon gap-3 rounded-2xl px-3 py-2 text-sm font-regular transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer",
                     isActive ? "font-extrabold" : "font-medium",
                   )}
                 >
@@ -97,7 +97,7 @@ export function AppSidebar() {
                 key={item.title}
                 href={item.url}
                 className={cn(
-                  "flex items-center icon gap-4 rounded-2xl px-3 py-2 text-sm font-regular transition-colors hover:bg-accent hover:text-accent-foreground",
+                  "flex items-center icon gap-3 rounded-2xl px-3 py-2 text-sm font-regular transition-colors hover:bg-accent hover:text-accent-foreground",
                   isActive ? "font-extrabold" : "font-medium",
                 )}
               >

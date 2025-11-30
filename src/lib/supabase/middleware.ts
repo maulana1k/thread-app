@@ -41,13 +41,12 @@ export async function updateSession(request: NextRequest) {
     !user &&
     !request.nextUrl.pathname.startsWith("/login") &&
     !request.nextUrl.pathname.startsWith("/auth") &&
-    !request.nextUrl.pathname.startsWith("/register") &&
-    request.nextUrl.pathname !== "/"
+    !request.nextUrl.pathname.startsWith("/register")
   ) {
-    // no user, potentially respond by redirecting the user to the login page
-    // const url = request.nextUrl.clone()
-    // url.pathname = '/login'
-    // return NextResponse.redirect(url)
+    // Redirect unauthenticated users to the login page
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
@@ -58,5 +57,11 @@ export async function updateSession(request: NextRequest) {
   //    myNewResponse.cookies.setAll(supabaseResponse.cookies.getAll())
   // 3. Change the myNewResponse object to fit your needs, but avoid changing
   //    the cookies!
+  // Prevent caching of protected pages to ensure back button works correctly after logout
+  supabaseResponse.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+  supabaseResponse.headers.set("Pragma", "no-cache");
+  supabaseResponse.headers.set("Expires", "0");
+  supabaseResponse.headers.set("Surrogate-Control", "no-store");
+
   return supabaseResponse;
 }

@@ -135,8 +135,14 @@ const withPWAConfig = withPWA({
         const isSameOrigin = self.origin === url.origin;
         if (!isSameOrigin) return false;
         const pathname = url.pathname;
+        // Exclude API routes
         if (pathname.startsWith("/api/")) return false;
+        // Exclude Next.js internal routes
         if (pathname.startsWith("/_next/")) return false;
+        // Exclude auth-related routes to prevent caching issues
+        if (pathname.startsWith("/login")) return false;
+        if (pathname.startsWith("/register")) return false;
+        if (pathname.startsWith("/auth")) return false;
         return true;
       },
       handler: "NetworkFirst",

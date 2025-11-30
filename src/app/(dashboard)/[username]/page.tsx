@@ -5,12 +5,11 @@ import { useProfile } from "@/features/profile/hooks/use-profile";
 import { ProfileHeader } from "@/features/profile/components/profile-header";
 import { ProfileTabs } from "@/features/profile/components/profile-tabs";
 import { ProfileContent } from "@/features/profile/components/profile-content";
-import { AltArrowLeft, HamburgerMenu, MenuDots } from "@solar-icons/react";
 import { useRouter } from "next/navigation";
 import { ProfilePageSkeleton } from "@/features/profile/components/profile-page-skeleton";
 import { ProfileNotFound } from "@/features/profile/components/profile-not-found";
 import { useAuthStore } from "@/store/auth-store";
-import { ArrowLeft, CircleEllipsis, DotSquare, Menu } from "lucide-react";
+import { ArrowLeft, CircleEllipsis } from "lucide-react";
 
 export default function ProfilePage({
   params,

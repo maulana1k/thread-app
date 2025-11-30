@@ -61,7 +61,7 @@ export function CreatePostForm({ onSuccess, className }: { onSuccess?: () => voi
   };
 
   return (
-    <form onSubmit={handleSubmit} className={cn("flex flex-col h-full", className)}>
+    <form onSubmit={handleSubmit} className={cn("flex flex-col h-full bg-background", className)}>
       {/* Scrollable Content Area */}
       <div className="flex-1 overflow-y-auto py-4">
         <div className="flex items-start gap-3 px-4">

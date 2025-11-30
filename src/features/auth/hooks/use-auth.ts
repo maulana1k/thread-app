@@ -18,7 +18,6 @@ export const useLogin = () => {
 };
 
 export const useRegister = () => {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -26,7 +25,6 @@ export const useRegister = () => {
       authService.register(credentials),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
-      router.push("/onboarding");
     },
   });
 };
@@ -84,5 +82,23 @@ export const useOnboardingStatus = (userId: string | undefined) => {
     queryKey: ["onboarding", userId],
     queryFn: () => authService.checkOnboardingStatus(userId!),
     enabled: !!userId,
+  });
+};
+
+export const useResendVerificationEmail = () => {
+  return useMutation({
+    mutationFn: (email: string) => authService.resendVerificationEmail(email),
+  });
+};
+
+export const useVerifyEmailOtp = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ email, token }: { email: string; token: string }) =>
+      authService.verifyEmailOtp(email, token),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
   });
 };

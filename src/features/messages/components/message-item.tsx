@@ -22,7 +22,7 @@ export function MessageItem({ message }: MessageItemProps) {
     <div
       onClick={handleClick}
       className={cn(
-        "flex items-center gap-3 px-4 py-3 border-b border-border/40 cursor-pointer hover:bg-muted/50 transition-colors active:bg-muted",
+        "flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-muted/50 transition-colors active:bg-muted",
       )}
     >
       {/* Avatar */}

@@ -81,7 +81,7 @@ export function InstallPWA() {
     <Button
       variant="default"
       className="rounded-full"
-      size="sm"
+      size="default"
       onClick={onClick}
       disabled={isInstalling}
     >

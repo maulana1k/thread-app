@@ -12,7 +12,7 @@ export const AuthButton = forwardRef<HTMLButtonElement, AuthButtonProps>(
     ref,
   ) => {
     const baseStyles =
-      "w-full py-3.5 px-4 font-semibold text-[17px] rounded-[12px] transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed";
+      "w-full py-3 px-4 font-semibold text-[17px] rounded-[12px] transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed";
 
     const variants = {
       primary:

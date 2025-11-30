@@ -22,7 +22,7 @@ export function MessageList() {
   );
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col lg:max-w-md">
       {/* Filter Pills */}
       <div className="flex gap-2 px-4 pb-2 z-10 bg-background/95 backdrop-blur-xl">
         <button

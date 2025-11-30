@@ -9,6 +9,10 @@ import { AuthInput } from "./auth-input";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { AvatarUpload } from "./avatar-upload";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 export function OnboardingForm() {
   const { data: user } = useUser();
@@ -20,10 +24,12 @@ export function OnboardingForm() {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<OnboardingData>({
     resolver: zodResolver(onboardingSchema),
     defaultValues: {
       username: "",
+      full_name: "",
       bio: "",
       avatar_url: "",
     },
@@ -32,6 +38,9 @@ export function OnboardingForm() {
   useEffect(() => {
     if (user?.user_metadata?.username) {
       setValue("username", user.user_metadata.username);
+    }
+    if (user?.user_metadata?.full_name) {
+      setValue("full_name", user.user_metadata.full_name);
     }
   }, [user, setValue]);
 
@@ -55,6 +64,7 @@ export function OnboardingForm() {
         },
         onSuccess: () => {
           toast.success("Profile completed!");
+          router.push("/");
         },
       },
     );
@@ -80,61 +90,69 @@ export function OnboardingForm() {
 
   return (
     <div className="w-full max-w-md mx-auto px-4 smooth-fade-in">
-      <div className="bg-card rounded-[20px]  p-6 sm:p-8">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-(--ios-blue)/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg
-              className="w-8 h-8 text-(--ios-blue)"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
-          </div>
-          <h1 className="text-3xl font-bold mb-2">Complete Your Profile</h1>
-          <p className="text-muted-foreground text-[15px]">
-            Tell us a bit about yourself
-          </p>
-        </div>
-
-        {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <AuthInput
-            label="Username"
-            type="text"
-            error={errors.username?.message}
-            {...register("username")}
-          />
-
-          <div className="relative">
-            <textarea
-              className="w-full bg-muted/50 border-0 rounded-[12px] px-4 pt-6 pb-2 text-[17px] focus:bg-muted/70 focus:ring-2 focus:ring-[var(--ios-blue)]/20 focus:outline-none transition-all duration-200 resize-none min-h-[100px]"
-              placeholder="Bio"
-              {...register("bio")}
+      <div className="rounded-[20px]  p-6 sm:p-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div className="flex justify-center">
+            <AvatarUpload
+              username={user?.user_metadata.username}
+              value={watch("avatar_url")}
+              onChange={(url) =>
+                setValue("avatar_url", url, { shouldValidate: true })
+              }
             />
-            <label className="absolute left-4 top-2 text-xs font-medium text-muted-foreground">
-              Bio (Optional)
-            </label>
-            {errors.bio && (
-              <p className="mt-1.5 text-sm text-destructive px-1">
-                {errors.bio.message}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="username" className="text-xs font-medium text-muted-foreground tracking-wider ml-1">
+              Username
+            </Label>
+            <Input
+              disabled
+              id="username"
+              {...register("username")}
+              className="bg-muted/50 border-none h-12 px-4 rounded-xl focus-visible:ring-1 focus-visible:ring-primary/20 transition-all"
+              placeholder="Your Name"
+            />
+            {errors.username && (
+              <p className="text-xs text-destructive ml-1">
+                {errors.username.message}
               </p>
             )}
           </div>
 
-          <AuthInput
-            label="Avatar URL (Optional)"
-            type="url"
-            error={errors.avatar_url?.message}
-            {...register("avatar_url")}
-          />
+          <div className="space-y-2">
+            <Label htmlFor="full_name" className="text-xs font-medium text-muted-foreground tracking-wider ml-1">
+              Full Name
+            </Label>
+            <Input
+              id="full_name"
+              {...register("full_name")}
+              className="bg-muted/50 border-none h-12 px-4 rounded-xl focus-visible:ring-1 focus-visible:ring-primary/20 transition-all"
+              placeholder="Your Name"
+            />
+            {errors.full_name && (
+              <p className="text-xs text-destructive ml-1">
+                {errors.full_name.message}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+                <Label htmlFor="bio" className="text-xs font-medium text-muted-foreground tracking-wider ml-1">
+                  Bio
+                </Label>
+                <Textarea
+                  id="bio"
+                  {...register("bio")}
+                  className="bg-muted/50 border-none min-h-[100px] p-4 rounded-xl resize-none focus-visible:ring-1 focus-visible:ring-primary/20 transition-all"
+                  placeholder="Write a short bio..."
+                  rows={7}
+                />
+                {errors.bio && (
+                  <p className="text-xs text-destructive ml-1">
+                    {errors.bio.message}
+                  </p>
+                )}
+              </div>
 
           <div className="pt-2 space-y-3">
             <AuthButton type="submit" variant="primary" isLoading={isPending}>

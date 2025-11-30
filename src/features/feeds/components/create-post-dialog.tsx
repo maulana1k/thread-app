@@ -49,8 +49,8 @@ export function CreatePostDialog({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{Trigger}</DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] rounded-3xl p-0 gap-0 overflow-hidden bg-background/80 backdrop-blur-xl border-none shadow-2xl">
-          <DialogHeader className="px-6 py-4 border-b border-border/10 bg-transparent">
+        <DialogContent className="sm:max-w-[425px] bg-background rounded-3xl p-0 gap-0 overflow-hidden border-none shadow-2xl">
+          <DialogHeader className="px-6 py-4 border-b border-border/10 bg-background">
             <DialogTitle className="text-center text-lg font-semibold">
               Create new post
             </DialogTitle>
